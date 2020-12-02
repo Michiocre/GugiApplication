@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <title>This is the title of the webpage!</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <form onsubmit="return getData()" name="form">
+        <label for="File">File:</label>
+        <input type="text" id="fileName" name="fname">
+        <input type="submit" value="Refresh"></input>
+    </form>
+    
+    <table class="styled-table">
+        <thead id="tableHead">
+        </thead>
+        <tbody id="table">
+
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        var request = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
+        var tBody = document.getElementById("table");
+        var tHead = document.getElementById("tableHead");
+
+        function getData() {
+            var x = document.forms["form"]["fname"].value;
+            console.log(x);
+
+            var url = window.location.href.toString() + x + ".csv";
+            tBody.innerHTML = '';
+            fetch(url).then(function(response) {
+                response.text().then(function(text) {
+                    var lines = text.split('\n');
+                    var headString = "";
+                    headString += "<tr>";
+                    lines[0].split(';').forEach(value => {
+                        headString += "<th>" + value + "</th>";
+                    });
+                    headString += "</tr>";
+                    tHead.innerHTML = headString;
+
+                    var bodyString = "";
+
+                    for (let i = 1; i < lines.length; i++) {
+                        values = lines[i].split(';');
+                        bodyString += "<tr>";
+                        values.forEach(value => {
+                            bodyString += "<td>" + value + "</td>";
+                        }); 
+                        bodyString += "</tr>";
+                    }
+                    tBody.innerHTML = bodyString;
+                });
+            });
+            return false;
+        }
+    </script>
+  </body>
+</html>
