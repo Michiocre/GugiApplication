@@ -1,6 +1,17 @@
+#myInput {
+    left: 0;
+    right: 0;
+    font-size: 16px; /* Increase font-size */
+    padding: 12px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin: 20px 20px 10px;
+  }
+
 .styled-table {
+    left: 0;
+    right: 0;
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 10px 20px;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
@@ -33,4 +44,33 @@
 .styled-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+body{ 
+    height:100vh; 
+    margin:0; 
+}
+
+footer{ 
+    width: 100%;
+    color: white;
+    text-align: center;
+    min-height:50px; 
+    background: #009879; 
+    font-family: sans-serif;
+}
+
+/* Trick */
+body{ 
+  display:flex; 
+  flex-direction:column; 
+}
+
+footer{
+  margin-top:auto; 
+}
+
+a {
+    color: white;
+    font-weight: bold;
 }

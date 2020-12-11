@@ -1,17 +1,14 @@
 <!doctype html>
 <html>
   <head>
-    <title>This is the title of the webpage!</title>
+    <title>Auftragsliste</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <form onsubmit="return getData()" name="form">
-        <label for="File">File:</label>
-        <input type="text" id="fileName" name="fname">
-        <input type="submit" value="Refresh"></input>
-    </form>
     
-    <table class="styled-table">
+    <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for names..">
+    
+    <table id="myTable" class="styled-table">
         <thead id="tableHead">
         </thead>
         <tbody id="table">
@@ -19,16 +16,20 @@
         </tbody>
     </table>
 
+    <footer>
+        <p>
+            Favicon by: <a href="https://www.flaticon.com/authors/vitaly-gorbachev">Vitaly Gorbachev</a>
+            Searchbar Icon by: <a href="https://www.flaticon.com/authors/those-icons">Those Icons</a>
+        </p>
+    </footer>
+
     <script type="text/javascript">
         var request = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
         var tBody = document.getElementById("table");
         var tHead = document.getElementById("tableHead");
 
         function getData() {
-            var x = document.forms["form"]["fname"].value;
-            console.log(x);
-
-            var url = window.location.href.toString() + x + ".csv";
+            var url = window.location.href.toString() + "data.csv";
             tBody.innerHTML = '';
             fetch(url).then(function(response) {
                 response.text().then(function(text) {
@@ -56,6 +57,36 @@
             });
             return false;
         }
+
+        function filterFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                var show = false;
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            show = true;
+                            break;
+                        }
+                    }
+                }
+                if (show || !filter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+        getData();
     </script>
   </body>
 </html>
