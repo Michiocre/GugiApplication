@@ -4,7 +4,8 @@
   "description": "Small Webserver to host data",
   "main": "index.js",
   "dependencies": {
-    "http-server": "^0.12.3"
+    "http-server": "^0.12.3",
+    "simple-site": "^0.1.27"
   },
   "devDependencies": {},
   "scripts": {
