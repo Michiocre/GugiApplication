@@ -1,2 +1,2 @@
 @echo off
-http-server -p 8080
+npm start
