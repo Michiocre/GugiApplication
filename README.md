@@ -1,11 +1,11 @@
 # GugiApplication
 
-### Prerequisite:
+### Vorbedingungen:
 [node.js](https://nodejs.org/en/)
 [git](https://git-scm.com/downloads)
 
 ### Installation
-After installing git and node.js clone this project into a folder using:
+Nachdem git und node.js installiert wurden in einem Ordner mit cmd diesen command ausführen:
 ```git clone https://github.com/Michiocre/GugiApplication```
 
-Then run update.bat to to install everything and start.bat to start the server.
+Dann einmal update.bat ausführen um alles zu installieren und start.bat um den server zu starten.
