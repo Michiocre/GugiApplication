@@ -6,6 +6,7 @@
 
 ### Installation
 Nachdem git und node.js installiert wurden in einem Ordner mit cmd diesen command ausführen:
+
 ```git clone https://github.com/Michiocre/GugiApplication```
 
 Dann einmal update.bat ausführen um alles zu installieren und start.bat um den server zu starten.
