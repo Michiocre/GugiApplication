@@ -4,13 +4,13 @@
   "description": "Small Webserver to host data",
   "main": "index.js",
   "dependencies": {
-    "http-server": "^0.12.3",
+    "express": "^4.17.1",
     "simple-site": "^0.1.27"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
