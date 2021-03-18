@@ -1,91 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Auftragsliste</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for names..">
-    
-    <table id="myTable" class="styled-table">
-        <thead id="tableHead">
-        </thead>
-        <tbody id="table">
+    <head>
+        <title>Auftragsliste</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <input
+            type="text"
+            id="myInput"
+            onkeyup="filterFunction()"
+            placeholder="Search for names.."
+        />
 
-        </tbody>
-    </table>
+        <table id="myTable" class="styled-table">
+            <thead id="tableHead"></thead>
+            <tbody id="table"></tbody>
+        </table>
 
-    <footer>
-        <p>
-            Favicon by: <a href="https://www.flaticon.com/authors/vitaly-gorbachev">Vitaly Gorbachev</a>
-        </p>
-    </footer>
+        <footer>
+            <p>
+                Favicon by:
+                <a href="https://www.flaticon.com/authors/vitaly-gorbachev"
+                    >Vitaly Gorbachev</a
+                >
+            </p>
+        </footer>
 
-    <script type="text/javascript">
-        var request = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
-        var tBody = document.getElementById("table");
-        var tHead = document.getElementById("tableHead");
+        <script type="text/javascript">
+            var request = window.XMLHttpRequest
+                ? new XMLHttpRequest()
+                : new ActiveXObject("Microsoft.XMLHTTP");
+            var tBody = document.getElementById("table");
+            var tHead = document.getElementById("tableHead");
 
-        function getData() {
-            var url = window.location.href.toString() + "data.csv";
-            tBody.innerHTML = '';
-            fetch(url).then(function(response) {
-                response.text().then(function(text) {
-                    var lines = text.split('\n');
-                    var headString = "";
-                    headString += "<tr>";
-                    lines[0].split(';').forEach(value => {
-                        headString += "<th>" + value + "</th>";
+            function getData() {
+                var url = window.location.href.toString() + "data.csv";
+                tBody.innerHTML = "";
+                fetch(url).then(function (response) {
+                    response.text().then(function (text) {
+                        var lines = text.split("\n");
+                        var headString = "";
+                        headString += "<tr>";
+                        lines[0].split(";").forEach((value) => {
+                            headString += "<th>" + value + "</th>";
+                        });
+                        headString += "</tr>";
+                        tHead.innerHTML = headString;
+
+                        var bodyString = "";
+
+                        for (let i = 1; i < lines.length; i++) {
+                            values = lines[i].split(";");
+                            bodyString += "<tr>";
+                            values.forEach((value) => {
+                                bodyString += "<td>" + value + "</td>";
+                            });
+                            bodyString += "</tr>";
+                        }
+                        tBody.innerHTML = bodyString;
                     });
-                    headString += "</tr>";
-                    tHead.innerHTML = headString;
-
-                    var bodyString = "";
-
-                    for (let i = 1; i < lines.length; i++) {
-                        values = lines[i].split(';');
-                        bodyString += "<tr>";
-                        values.forEach(value => {
-                            bodyString += "<td>" + value + "</td>";
-                        }); 
-                        bodyString += "</tr>";
-                    }
-                    tBody.innerHTML = bodyString;
                 });
-            });
-            return false;
-        }
+                return false;
+            }
 
-        function filterFunction() {
-            // Declare variables
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
+            function filterFunction() {
+                // Declare variables
+                var input, filter, table, tr, td, i, txtValue, filters;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                filters = filter.split(" ");
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
 
-            // Loop through all table rows, and hide those who don't match the search query
-            for (i = 1; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                var show = false;
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            show = true;
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 1; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td");
+                    var show = true;
+                    var foundWord = false;
+                    for (f = 0; f < filters.length; f++) {
+                        filter = filters[f];
+                        for (j = 0; j < td.length; j++) {
+                            if (td[j]) {
+                                foundWord = false;
+                                txtValue = td[j].textContent || td[j].innerText;
+                                if (
+                                    txtValue.toUpperCase().indexOf(filter) > -1
+                                ) {
+                                    foundWord = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!foundWord) {
+                            show = false;
                             break;
                         }
                     }
-                }
-                if (show || !filter) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+
+                    if (show || !filter) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
-        }
-        
-        getData();
-    </script>
-  </body>
+
+            getData();
+        </script>
+    </body>
 </html>
